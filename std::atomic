@@ -1,1 +1,13 @@
-
+What exactly is std::atomic?
+  * Anything with std::atomic<> is an atomic object. 
+  * Each instantiaion of std::atomic<> represents a type that different threads 
+    can simultaneously operate on without raising undefined behaviour. 
+  * Ojbects of atomic types are the only C++ objects that are free from data races. 
+  * If one threads writes to an atomic object while another thread reads from it, 
+      the behaviour is well-defined. 
+  * Accesses to atomic objects may establish inter-thread synchronization and 
+    order non-atomic memory accesses as specified by std::memory order.
+    
+When was it introduced?
+  * 
+    
