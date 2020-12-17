@@ -1,1 +1,32 @@
 
+What is the main purpose of std::string_view?
+  * it avoids copying data which is already owned by someone else. 
+  * whose non-mutating view is required. 
+  * it is used for performance jump. 
+  * it is quite cheap to copy a std::string_view
+  * std::string_view - only need two information - 
+      the pointer to the character sequence and their length
+   * std::string allocates no memory
+   * If we can observe performance boost very well if we build substrings
+    of existing strings. 
+  
+ 
+How many imes of string view exits?
+ * 4 types
+std::string_view      std::basic_string_view<char>
+std::wstring_view     std::basic_string_view<wchar_t>
+std::u16string_view   std::basic_string_view<char16_t>
+std::u32string_view   std::basic_string_view<char32_t>
+
+where does std::string store its data?
+ * std::string is like a thin wrapper that stores its data on the heap 
+ when the string exits an implementation-dependent size. Memory
+ allocations kicks in when you deal with C++ strings.
+ 
+What is the complexity of the method substr of std::string and std::string_view?
+* substr of std::string has linear complexity and substr of std::string_view 
+  has constant complexity. 
+ * performance of std::string is direclty dependent on the size of the substring 
+ * performance of std::string_view is independent of size of substring
+ 
+
