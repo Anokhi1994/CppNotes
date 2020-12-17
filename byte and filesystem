@@ -1,0 +1,9 @@
+what is a byte?
+* A byte is not an integer or a characer and therefore not open to programmer errors
+* its job is to access object storage
+- No idea what this is. 
+
+what unique features does filesystem have?
+* manipulate file permissions
+* read the time values of a file
+* get properties (free and available space of a filesystem)
