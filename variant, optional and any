@@ -1,1 +1,20 @@
-
+what is the use of std::any?
+* std::any will be the right choice if you want to have an container with 
+  an arbitary type. Types must be copyable though. 
+  example: std::vector<std::any> anyVec(true,2017,std::string("test"),3.14,MyClass());
+  
+ What is the use of std::optional?
+  * When you want to represent a nullable type nicely
+      - rather than using unique values like -1, nullptr etc
+      - for optional parameters
+  * Return a result of some computation that fails to produce a value 
+     and is not an error
+     
+ what is the use of std::vairant?
+  * it is type-safe union
+  
+ what is common in std::any, variant and optional?
+ * you can construct them in-place. 
+  
+ 
+  
