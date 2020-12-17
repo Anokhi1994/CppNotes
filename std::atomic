@@ -7,7 +7,72 @@ What exactly is std::atomic?
       the behaviour is well-defined. 
   * Accesses to atomic objects may establish inter-thread synchronization and 
     order non-atomic memory accesses as specified by std::memory order.
+  * std::atomic gives us more control by allowing various memory orders that specify
+   synchronization and ordering constraints. 
     
 When was it introduced?
-  * 
+  * 2011
+  
+What is happening in this code?
+ std::atomic<long> value(0);
+ value++; //This is an atomic op
+ value += 5; //And so is this
+ * operator syntax does not allow you to specify the memory order, these
+   operations will be performed with default order (that is sequential)
+ 
+Change above code to make it non-sequential
+* std::atomic<long> value {0};
+value.fetch_add(1, std::memory_order_relaxed); // Atomic, but there are no synchronization or ordering constraints
+value.fetch_add(5, std::memory_order_release); // Atomic, performs 'release' operation
+
+What is the order of operations in a = a+12?
+a.load() (atomic)
+addition
+a.store() (atomic)
+
+How can you write a +=12 to make it sequential?
+a.fetch_add(12, std..memory_order_seq_cst)
+
+What is the problem in the above code if you write it without atomic?
+* Usually the order is fetch/load(), add and store(). However some thread
+  might change the value of a, right after a.load() and disrupt your results. 
+
+A regular int has atomic loads and store. What is the point of wrapping it with atomic<>?
+* yes, int has loads and stores. However, only a correct architecture can proivde
+  the guarantee of atomicity for stores and loads. Some architectures cannot do this. 
+
+What is memory_order_release?
+* A store operation with this memory order performs the release operation. 
+* No read or write in the current thread can be reordered after this store. 
+* All writes in the current thread are visible in other threads that acquire
+  the same atomic variables. 
+  
+What is memory_order_acquire?
+* A load operation with this memory order performs the acquire operation
+  on te affected memory location. 
+* No read or write in the current thread can be reordered before this load. 
+
+What is the use of memory_order_release/acquire?
+* It gives us precise control over synchronization and allows us to explicitly 
+  specify the code will behave. 
+  
+What is the new feature added in C++20 in atomics?
+* std::atomic_ref
+* notify_one
+* notify_all
+* wait
+
+What happens in the below code:
+std::atomic_ref<int> counter{exp.counter};
+* Here a copy of the counter is made. Hence, if you increment exp.counter, 
+   counter will not be incremented. However, you could use std::atomic_ref 
+   to take the reference. 
+
+
+  
+
+ 
+
+  
+ 
     
